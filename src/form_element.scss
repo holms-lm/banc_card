@@ -1,0 +1,12 @@
+.form_element {
+    margin-bottom: 10px;
+    &__label {
+        display: block;
+        margin-bottom: 3px;
+    }
+    &__message {
+        margin-top: 3px;
+        font-size: 12px;
+        color: red;
+    }
+}
