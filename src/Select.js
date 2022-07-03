@@ -1,6 +1,6 @@
 import validators from './validators';
 
-export default function Input({ name, value, onChange, typeValidate, paramsValidate=[], checkValidate }) {
+export default function Select({ name, value, onChange, options, typeValidate, paramsValidate=[], checkValidate }) {
     function validator(e) {
         const $element = e.target;
         const name = $element.name;
@@ -11,11 +11,14 @@ export default function Input({ name, value, onChange, typeValidate, paramsValid
         }
         checkValidate(isValid, name, value);
     }
+
+    function renderOptions() {
+        return options.map((option) => <option key={option.value} value={option.value}>{option.text}</option>);
+    }
+
     return (
-        <input type="text"
-               name={name}
-               value={value}
-               onChange={onChange}
-               onBlur={(e) => validator(e, checkValidate)} />
+        <select name={name} value={value} onChange={(e) => { onChange(e); validator(e)}} >
+            {renderOptions()}
+        </select>
     )
 }

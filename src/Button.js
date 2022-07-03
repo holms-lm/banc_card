@@ -1,5 +1,11 @@
-export default function Button() {
+export default function Button(props) {
     return (
-        <button type='submit' className="button">Submit</button>
+        <button type={props.type}
+                disabled={props.disabled}
+                className="button"
+                onClick={props.onClick}
+        >
+            {props.text}
+        </button>
     )
 }

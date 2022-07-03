@@ -1,10 +1,10 @@
 import './main.scss';
-import Form from './Form';
+import CardWrapper from './cardWrapper';
 
 function App() {
   return (
     <div className="container">
-      <Form />
+      <CardWrapper />
     </div>
   );
 }
