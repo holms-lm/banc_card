@@ -1,7 +1,7 @@
 import React from 'react';
-import Input from './Input';
-import Select from './Select';
-import Button from './Button';
+import InputWrapper from './InputWrapper';
+import SelectWrapper from './SelectWrapper';
+import ButtonWrapper from './ButtonWrapper';
 import FormElement from './FormElement';
 
 export default class Form extends React.Component{
@@ -10,6 +10,7 @@ export default class Form extends React.Component{
         const defaultStateElement = {
             message: false,
             isValid: false,
+            error: false,
             value: '',
         }
         const createDefaultStateElement = (errorMessage) => Object.assign({errorMessage}, defaultStateElement);
@@ -25,7 +26,6 @@ export default class Form extends React.Component{
         Object.keys(elements).forEach(function(key) {
             cThis.defaultElements[key] = Object.assign({}, this[key]);
         }, elements);
-        this.defaultElements.holms = 'Hi';
         this.state = { isValid: false, elements: elements }
         this.checkValidate = this.checkValidate.bind(this);
         this.onChange = this.onChange.bind(this);
@@ -44,9 +44,11 @@ export default class Form extends React.Component{
         const elements = Object.assign({}, this.state.elements);
         if (isValid) {
             elements[name].isValid = true;
+            elements[name].error = false;
             elements[name].message = false;
         } else {
             elements[name].isValid = false;
+            elements[name].error = true;
             if (elements[name].errorMessage) {
                 elements[name].message = elements[name].errorMessage;
             } else {
@@ -93,7 +95,7 @@ export default class Form extends React.Component{
     }
 
     clearForm() {
-        this.setState({elements: this.defaultElements});
+        this.setState({isValid: false, elements: this.defaultElements});
     }
 
     submitForm(event) {
@@ -106,48 +108,62 @@ export default class Form extends React.Component{
         return (
             <form action="">
                 <h1>Form</h1>
-                <FormElement label='Card Number' message={this.state.elements.cardNumber.message}>
-                    <Input name='cardNumber'
-                           value={this.state.elements.cardNumber.value}
-                           onChange={this.onChange}
-                           checkValidate={this.checkValidate}
-                           typeValidate='cardNumber'/>
-                </FormElement>
-                <FormElement label='Card Name' message={this.state.elements.cardName.message}>
-                    <Input name='cardName'
-                           value={this.state.elements.cardName.value}
-                           onChange={this.onChange}
-                           checkValidate={this.checkValidate}
-                           typeValidate='name'/>
-                </FormElement>
-                <FormElement label='CVV' message={this.state.elements.cvv.message}>
-                    <Input name='cvv'
-                           value={this.state.elements.cvv.value}
-                           onChange={this.onChange}
-                           checkValidate={this.checkValidate}
-                           typeValidate='cvv'/>
-                </FormElement>
-                <FormElement label='Month' message={this.state.elements.month.message}>
-                    <Select name='month'
-                            value={this.state.elements.month.value}
-                            onChange={this.onChange}
-                            options={this.getMonths()}
-                            checkValidate={this.checkValidate}
-                            typeValidate='selected'/>
-                </FormElement>
-                <FormElement label='Year' message={this.state.elements.year.message}>
-                    <Select name='year'
-                            value={this.state.elements.year.value}
-                            onChange={this.onChange}
-                            options={this.getYears()}
-                            checkValidate={this.checkValidate}
-                            typeValidate='selected'/>
-                </FormElement>
+                {/*<FormElement label='Card Number' message={this.state.elements.cardNumber.message}>*/}
+                    <InputWrapper name='cardNumber'
+                                  label='Card Number' message={this.state.elements.cardNumber.message}
+                                  error={this.state.elements.cardNumber.error}
+                                  value={this.state.elements.cardNumber.value}
+                                  onChange={this.onChange}
+                                  checkValidate={this.checkValidate}
+                                  typeValidate='cardNumber'/>
+                {/*</FormElement>*/}
+                {/*<FormElement label='Card Name' message={this.state.elements.cardName.message}>*/}
+                <br/>
+                    <InputWrapper name='cardName'
+                                  value={this.state.elements.cardName.value}
+                                  label='Card Name' message={this.state.elements.cardName.message}
+                                  error={this.state.elements.cardName.error}
+                                  onChange={this.onChange}
+                                  checkValidate={this.checkValidate}
+                                  typeValidate='name'/>
+                {/*</FormElement>*/}
+                {/*<FormElement label='CVV' message={this.state.elements.cvv.message}>*/}
+                <br/>
+                    <InputWrapper name='cvv'
+                                  value={this.state.elements.cvv.value}
+                                  label='CVV' message={this.state.elements.cvv.message}
+                                  error={this.state.elements.cvv.error}
+                                  onChange={this.onChange}
+                                  checkValidate={this.checkValidate}
+                                  typeValidate='cvv'/>
+                {/*</FormElement>*/}
+                {/*<FormElement label='Month' message={this.state.elements.month.message}>*/}
+                <br/>
+                    <SelectWrapper name='month'
+                                   value={this.state.elements.month.value}
+                                   label='Month' message={this.state.elements.month.message}
+                                   error={this.state.elements.month.error}
+                                   onChange={this.onChange}
+                                   options={this.getMonths()}
+                                   checkValidate={this.checkValidate}
+                                   typeValidate='selected'/>
+                {/*</FormElement>*/}
+                {/*<FormElement label='Year' message={this.state.elements.year.message}>*/}
+                <br/>
+                    <SelectWrapper name='year'
+                                   value={this.state.elements.year.value}
+                                   label='Year' message={this.state.elements.year.message}
+                                   error={this.state.elements.year.error}
+                                   onChange={this.onChange}
+                                   options={this.getYears()}
+                                   checkValidate={this.checkValidate}
+                                   typeValidate='selected'/>
+                {/*</FormElement>*/}
                 <div className="form_element">
-                    <Button text='Clear' type='button' onClick={() => this.clearForm()}/>
+                    <ButtonWrapper text='Clear' type='button' onClick={() => this.clearForm()}/>
                 </div>
                 <div className="form_element">
-                    <Button text='Submit' type='submit' disabled={!this.state.isValid} onClick={this.submitForm}/>
+                    <ButtonWrapper text='Submit' type='submit' disabled={!this.state.isValid} onClick={this.submitForm}/>
                 </div>
             </form>
         )
