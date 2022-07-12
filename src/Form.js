@@ -108,7 +108,7 @@ export default class Form extends React.Component{
         return (
             <form action="">
                 <h1>Form</h1>
-                {/*<FormElement label='Card Number' message={this.state.elements.cardNumber.message}>*/}
+                <div className="form_element">
                     <InputWrapper name='cardNumber'
                                   label='Card Number' message={this.state.elements.cardNumber.message}
                                   error={this.state.elements.cardNumber.error}
@@ -116,9 +116,8 @@ export default class Form extends React.Component{
                                   onChange={this.onChange}
                                   checkValidate={this.checkValidate}
                                   typeValidate='cardNumber'/>
-                {/*</FormElement>*/}
-                {/*<FormElement label='Card Name' message={this.state.elements.cardName.message}>*/}
-                <br/>
+                </div>
+                <div className="form_element">
                     <InputWrapper name='cardName'
                                   value={this.state.elements.cardName.value}
                                   label='Card Name' message={this.state.elements.cardName.message}
@@ -126,44 +125,46 @@ export default class Form extends React.Component{
                                   onChange={this.onChange}
                                   checkValidate={this.checkValidate}
                                   typeValidate='name'/>
-                {/*</FormElement>*/}
-                {/*<FormElement label='CVV' message={this.state.elements.cvv.message}>*/}
-                <br/>
-                    <InputWrapper name='cvv'
-                                  value={this.state.elements.cvv.value}
-                                  label='CVV' message={this.state.elements.cvv.message}
-                                  error={this.state.elements.cvv.error}
-                                  onChange={this.onChange}
-                                  checkValidate={this.checkValidate}
-                                  typeValidate='cvv'/>
-                {/*</FormElement>*/}
-                {/*<FormElement label='Month' message={this.state.elements.month.message}>*/}
-                <br/>
-                    <SelectWrapper name='month'
-                                   value={this.state.elements.month.value}
-                                   label='Month' message={this.state.elements.month.message}
-                                   error={this.state.elements.month.error}
-                                   onChange={this.onChange}
-                                   options={this.getMonths()}
-                                   checkValidate={this.checkValidate}
-                                   typeValidate='selected'/>
-                {/*</FormElement>*/}
-                {/*<FormElement label='Year' message={this.state.elements.year.message}>*/}
-                <br/>
-                    <SelectWrapper name='year'
-                                   value={this.state.elements.year.value}
-                                   label='Year' message={this.state.elements.year.message}
-                                   error={this.state.elements.year.error}
-                                   onChange={this.onChange}
-                                   options={this.getYears()}
-                                   checkValidate={this.checkValidate}
-                                   typeValidate='selected'/>
-                {/*</FormElement>*/}
-                <div className="form_element">
-                    <ButtonWrapper text='Clear' type='button' onClick={() => this.clearForm()}/>
                 </div>
-                <div className="form_element">
-                    <ButtonWrapper text='Submit' type='submit' disabled={!this.state.isValid} onClick={this.submitForm}/>
+                <div className="form_wrapper__row">
+                    <div className="form_element">
+                        <InputWrapper name='cvv'
+                                      value={this.state.elements.cvv.value}
+                                      label='CVV' message={this.state.elements.cvv.message}
+                                      error={this.state.elements.cvv.error}
+                                      onChange={this.onChange}
+                                      checkValidate={this.checkValidate}
+                                      typeValidate='cvv'/>
+                    </div>
+                    <div className="form_element">
+                        <SelectWrapper name='month'
+                                       value={this.state.elements.month.value}
+                                       label='Month' message={this.state.elements.month.message}
+                                       error={this.state.elements.month.error}
+                                       onChange={this.onChange}
+                                       options={this.getMonths()}
+                                       checkValidate={this.checkValidate}
+                                       typeValidate='selected'/>
+                    </div>
+                    <div className="form_element">
+                        <SelectWrapper name='year'
+                                       value={this.state.elements.year.value}
+                                       label='Year' message={this.state.elements.year.message}
+                                       error={this.state.elements.year.error}
+                                       onChange={this.onChange}
+                                       options={this.getYears()}
+                                       checkValidate={this.checkValidate}
+                                       typeValidate='selected'/>
+                    </div>
+                </div>
+                <div className="form_wrapper__row">
+                    <div></div>
+                    <div className="form_element">
+                        <ButtonWrapper text='Clear' type='button' onClick={() => this.clearForm()}/>
+                    </div>
+                    <div className="form_element">
+                        <ButtonWrapper text='Submit' type='submit' disabled={!this.state.isValid} onClick={this.submitForm}/>
+                    </div>
                 </div>
             </form>
         )

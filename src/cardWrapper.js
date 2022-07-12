@@ -5,7 +5,7 @@ import Card from './card';
 class CardWrapper extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {formData: {number: '', name: '', expires: 'MM/YY'}};
+        this.state = {formData: {number: '################', name: '', expires: 'MM/YY'}};
         this.printDataCard = this.printDataCard.bind(this);
     }
 
@@ -16,8 +16,10 @@ class CardWrapper extends React.Component {
     render() {
         return (
             <div>
-                <Form printDataCard={this.printDataCard}/>
-                <Card number={this.state.formData.number} name={this.state.formData.name} expires={this.state.formData.expires} />
+                <div className="form_wrapper">
+                    <Card number={this.state.formData.number} name={this.state.formData.name} expires={this.state.formData.expires} />
+                    <Form printDataCard={this.printDataCard}/>
+                </div>
             </div>
         )
     }

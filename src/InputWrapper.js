@@ -1,5 +1,5 @@
 import validators from './validators';
-import TextField from '@material-ui/core/TextField';
+import TextField from '@mui/material/TextField'
 
 export default function InputWrapper({ name, value, label, message, error, onChange, typeValidate, paramsValidate=[], checkValidate }) {
     function validator(e) {
