@@ -2,7 +2,6 @@ import React from 'react';
 import InputWrapper from './InputWrapper';
 import SelectWrapper from './SelectWrapper';
 import ButtonWrapper from './ButtonWrapper';
-import FormElement from './FormElement';
 
 export default class Form extends React.Component{
     constructor(props) {
@@ -40,19 +39,20 @@ export default class Form extends React.Component{
         }
     }
 
-    checkValidate(isValid, name, value) {
+    checkValidate(isValid, name) {
         const elements = Object.assign({}, this.state.elements);
+        const currentElement = elements[name];
         if (isValid) {
-            elements[name].isValid = true;
-            elements[name].error = false;
-            elements[name].message = false;
+            currentElement.isValid = true;
+            currentElement.error = false;
+            currentElement.message = false;
         } else {
-            elements[name].isValid = false;
-            elements[name].error = true;
-            if (elements[name].errorMessage) {
-                elements[name].message = elements[name].errorMessage;
+            currentElement.isValid = false;
+            currentElement.error = true;
+            if (currentElement.errorMessage) {
+                currentElement.message = currentElement.errorMessage;
             } else {
-                elements[name].message = 'error';
+                currentElement.message = 'error';
             }
         }
         let isValidForm = true;
@@ -86,16 +86,14 @@ export default class Form extends React.Component{
     }
 
     onChange(e) {
-        const $element = e.target;
-        const name = $element.name;
-        const value = $element.value;
+        const { name, value } = e.target;
         const stateElements = Object.assign({}, this.state.elements)
         stateElements[name].value = value;
         this.setState({ elements: stateElements });
     }
 
     clearForm() {
-        this.setState({isValid: false, elements: this.defaultElements});
+        this.setState({ isValid: false, elements: this.defaultElements });
     }
 
     submitForm(event) {
@@ -105,65 +103,76 @@ export default class Form extends React.Component{
     }
 
     render() {
+        const { cardNumber, cardName, cvv, month, year } = this.state.elements;
         return (
-            <form action="">
+            <form>
                 <h1>Form</h1>
                 <div className="form_element">
                     <InputWrapper name='cardNumber'
-                                  label='Card Number' message={this.state.elements.cardNumber.message}
-                                  error={this.state.elements.cardNumber.error}
-                                  value={this.state.elements.cardNumber.value}
-                                  onChange={this.onChange}
-                                  checkValidate={this.checkValidate}
+                                  label='Card Number' message={ cardNumber.message }
+                                  error={ cardNumber.error }
+                                  value={ cardNumber.value }
+                                  onChange={ this.onChange }
+                                  checkValidate={ this.checkValidate }
                                   typeValidate='cardNumber'/>
                 </div>
                 <div className="form_element">
                     <InputWrapper name='cardName'
-                                  value={this.state.elements.cardName.value}
-                                  label='Card Name' message={this.state.elements.cardName.message}
-                                  error={this.state.elements.cardName.error}
-                                  onChange={this.onChange}
-                                  checkValidate={this.checkValidate}
+                                  value={ cardName.value }
+                                  label='Card Name' message={ cardName.message }
+                                  error={ cardName.error }
+                                  onChange={ this.onChange }
+                                  checkValidate={ this.checkValidate }
                                   typeValidate='name'/>
                 </div>
-                <div className="form_wrapper__row">
+                <div className="wrapper__row">
                     <div className="form_element">
                         <InputWrapper name='cvv'
-                                      value={this.state.elements.cvv.value}
-                                      label='CVV' message={this.state.elements.cvv.message}
-                                      error={this.state.elements.cvv.error}
-                                      onChange={this.onChange}
-                                      checkValidate={this.checkValidate}
+                                      value={ cvv.value }
+                                      label='CVV' message={ cvv.message }
+                                      error={ cvv.error }
+                                      onChange={ this.onChange }
+                                      checkValidate={ this.checkValidate }
                                       typeValidate='cvv'/>
                     </div>
                     <div className="form_element">
                         <SelectWrapper name='month'
-                                       value={this.state.elements.month.value}
-                                       label='Month' message={this.state.elements.month.message}
-                                       error={this.state.elements.month.error}
-                                       onChange={this.onChange}
-                                       options={this.getMonths()}
-                                       checkValidate={this.checkValidate}
+                                       value={month.value}
+                                       label='Month' message={month.message}
+                                       error={month.error}
+                                       onChange={ this.onChange }
+                                       options={ this.getMonths() }
+                                       checkValidate={ this.checkValidate }
                                        typeValidate='selected'/>
                     </div>
                     <div className="form_element">
                         <SelectWrapper name='year'
-                                       value={this.state.elements.year.value}
-                                       label='Year' message={this.state.elements.year.message}
-                                       error={this.state.elements.year.error}
-                                       onChange={this.onChange}
-                                       options={this.getYears()}
-                                       checkValidate={this.checkValidate}
+                                       value={ year.value }
+                                       label='Year'
+                                       message={ year.message }
+                                       error={ year.error }
+                                       onChange={ this.onChange }
+                                       options={ this.getYears() }
+                                       checkValidate={ this.checkValidate }
                                        typeValidate='selected'/>
                     </div>
                 </div>
-                <div className="form_wrapper__row">
+                <div className="wrapper__row">
                     <div></div>
                     <div className="form_element">
-                        <ButtonWrapper text='Clear' type='button' onClick={() => this.clearForm()}/>
+                        <ButtonWrapper
+                            text='Clear'
+                            type='button'
+                            onClick={ () => this.clearForm() }
+                        />
                     </div>
                     <div className="form_element">
-                        <ButtonWrapper text='Submit' type='submit' disabled={!this.state.isValid} onClick={this.submitForm}/>
+                        <ButtonWrapper
+                            text='Submit'
+                            type='submit'
+                            disabled={ !this.state.isValid }
+                            onClick={ this.submitForm }
+                        />
                     </div>
                 </div>
             </form>

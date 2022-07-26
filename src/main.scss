@@ -1,9 +1,7 @@
-@import 'container';
-@import 'form_element';
-@import 'button';
-@import 'select';
-@import 'form_wrapper';
-@import 'card';
+@import 'components/container';
+@import 'components/form_element';
+@import 'components/Wrapper/wrapper';
+@import 'components/Card/card';
 
 body {
   background-color: #7aa3ec;

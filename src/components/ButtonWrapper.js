@@ -1,16 +1,16 @@
 import Button from '@mui/material/Button';
 
-export default function ButtonWrapper(props) {
+export default function ButtonWrapper({  type, disabled, text, onClick }) {
     return (
         <Button
             variant="contained"
             color="primary"
-            type={props.type}
-            disabled={props.disabled}
+            type={ type }
+            disabled={ disabled }
             className="button"
-            onClick={props.onClick}
+            onClick={ onClick }
         >
-            {props.text}
+            { text }
         </Button>
     )
 }
